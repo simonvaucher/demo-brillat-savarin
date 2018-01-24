@@ -1,4 +1,4 @@
-package com.applicaster.skeleton.ReactNativeLoginPlugin;
+package com.applicaster.ReactNativeLoginPlugin;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.applicaster.skeleton.ReactNativeLoginPlugin.events.NativeEventsEmitter;
+import com.applicaster.ReactNativeLoginPlugin.events.NativeEventsEmitter;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.ReactContext;
@@ -21,12 +21,18 @@ import java.util.List;
 
 public class Manager implements LoginHandler {
     private static final int DEFAULT_POPUP_SIZE = RelativeLayout.LayoutParams.MATCH_PARENT;
+    private static final String REACT_NATIVE_MODULE_NAME = "RNRoot";
 
     private Context context;
     private ReactContextManager reactContextManager;
     private PopupWindow popupWindow;
     private NativeEventsEmitter nativeEventsEmitter;
+
     private Manager.LoginActionsListener loginActionsListener;
+    private boolean developmentMode = false;
+    private String reactNativeModuleName = REACT_NATIVE_MODULE_NAME;
+    private String reactNativeAndroidBundleURL;
+    private String reactNativeDevPackagerURL;
 
     private Boolean initialized;
     private Boolean visible;
@@ -51,6 +57,23 @@ public class Manager implements LoginHandler {
         this.loginActionsListener = loginActionsListener;
     }
 
+    public void setDevelopmentMode(boolean developmentMode) {
+        this.developmentMode = developmentMode;
+    }
+
+    public void setReactNativeModuleName(String reactNativeModuleName) {
+        this.reactNativeModuleName = reactNativeModuleName;
+    }
+
+    public void setReactNativeAndroidBundleURL(String reactNativeAndroidBundleURL) {
+        this.reactNativeAndroidBundleURL = reactNativeAndroidBundleURL;
+    }
+
+    public void setReactNativeDevPackagerURL(String reactNativeDevPackagerURL) {
+        this.reactNativeDevPackagerURL = reactNativeDevPackagerURL;
+    }
+
+
     public Manager(Context context) {
         this.context = context;
         setInitialized(false);
@@ -73,8 +96,14 @@ public class Manager implements LoginHandler {
         List<ReactPackage> reactPackages = new ArrayList<>();
         reactPackages.add(new LoginReactPackage(this));
 
-        // TODO: also add remove listener function
-        reactContextManager = new ReactContextManager(context, reactPackages, listener);
+        reactContextManager = new ReactContextManager(context);
+        reactContextManager.setReactPackages(reactPackages);
+        reactContextManager.setReactContextManagerListener(listener);
+        reactContextManager.setDevelopmentMode(developmentMode);
+        reactContextManager.setReactNativeModuleName(reactNativeModuleName);
+        reactContextManager.setReactNativeAndroidBundleURL(reactNativeAndroidBundleURL);
+        reactContextManager.setReactNativeDevPackagerURL(reactNativeDevPackagerURL);
+        reactContextManager.initialize();
     }
 
     public void show(View parentView) {

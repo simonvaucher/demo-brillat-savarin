@@ -22,18 +22,56 @@ public class ReactContextManager implements ReactInstanceManager.ReactInstanceEv
         void onReady(ReactContext context, ReactRootView reactRootView);
     }
 
-    private static final String REACT_NATIVE_MODULE_NAME = "RNRoot";
     private static final String PREFS_DEBUG_SERVER_HOST_KEY = "debug_http_host";
 
-    private Context context;
-    private ReactContextManager.ReactContextManagerListener reactContextManagerListener;
     private ReactContext reactContext;
     private ReactRootView reactRootView;
 
-    public ReactContextManager(Context context, List<ReactPackage> reactPackages, ReactContextManagerListener reactContextManagerListener) {
-        this.context = context;
+    private Context context;
+    private List<ReactPackage> reactPackages;
+    private ReactContextManager.ReactContextManagerListener reactContextManagerListener;
+    private Boolean developmentMode;
+    private String reactNativeAndroidBundleURL;
+    private String reactNativeDevPackagerURL;
+    private String reactNativeModuleName;
+
+    public void setReactPackages(List<ReactPackage> reactPackages) {
+        this.reactPackages = reactPackages;
+    }
+
+    public void setReactContextManagerListener(ReactContextManagerListener reactContextManagerListener) {
         this.reactContextManagerListener = reactContextManagerListener;
-        setPackagerURL(true); // DEV mode only. TODO: proper separation to PROD and DEV
+    }
+
+    public void setDevelopmentMode(Boolean developmentMode) {
+        this.developmentMode = developmentMode;
+    }
+
+    public void setReactNativeAndroidBundleURL(String reactNativeAndroidBundleURL) {
+        this.reactNativeAndroidBundleURL = reactNativeAndroidBundleURL;
+    }
+
+    public void setReactNativeDevPackagerURL(String reactNativeDevPackagerURL) {
+        this.reactNativeDevPackagerURL = reactNativeDevPackagerURL;
+    }
+
+    public void setReactNativeModuleName(String reactNativeModuleName) {
+        this.reactNativeModuleName = reactNativeModuleName;
+    }
+
+    public ReactContextManager(Context context) {
+        this.context = context;
+    }
+
+    public void initialize() {
+        this.reactPackages = reactPackages;
+        this.reactContextManagerListener = reactContextManagerListener;
+        this.developmentMode = developmentMode;
+        this.reactNativeAndroidBundleURL = reactNativeAndroidBundleURL;
+        this.reactNativeDevPackagerURL = reactNativeDevPackagerURL;
+        this.reactNativeModuleName = reactNativeModuleName;
+
+        setPackagerURL(); // DEV mode only - override dev packager for devices etc.
         ReactInstanceManager reactInstanceManager = getReactInstanceManager(context, reactPackages);
         reactInstanceManager.addReactInstanceEventListener(this);
         reactRootView = initializeReactRootView(context, reactInstanceManager);
@@ -49,7 +87,7 @@ public class ReactContextManager implements ReactInstanceManager.ReactInstanceEv
 
     private ReactRootView initializeReactRootView(Context context, ReactInstanceManager reactInstanceManager) {
         ReactRootView reactRootView = new ReactRootView(context);
-        reactRootView.startReactApplication(reactInstanceManager, REACT_NATIVE_MODULE_NAME, getLaunchOptions());
+        reactRootView.startReactApplication(reactInstanceManager, reactNativeModuleName, getLaunchOptions());
         return reactRootView;
     }
 
@@ -63,12 +101,18 @@ public class ReactContextManager implements ReactInstanceManager.ReactInstanceEv
         ReactInstanceManagerBuilder reactManagerBuilder = ReactInstanceManager.builder()
             .setApplication(((Activity)context).getApplication())
             .addPackage(new MainReactPackage())
-            .addPackages(reactPackages)  // CAVEAT EMPTOR: classes must be instantiated!!
-            .setInitialLifecycleState(LifecycleState.RESUMED)
-            .setUseDeveloperSupport(BuildConfig.DEBUG)
-            .setBundleAssetName("index.android.bundle")
-            .setJSMainModulePath("index");
+            .addPackages(reactPackages)  // BEWARE: classes must be instantiated!!
+            .setInitialLifecycleState(LifecycleState.RESUMED);
 
+        if (developmentMode) {
+            reactManagerBuilder
+                .setUseDeveloperSupport(true)
+                .setBundleAssetName("index.android.bundle")
+                .setJSMainModulePath("index");
+        } else {
+            reactManagerBuilder
+                .setJSBundleFile(reactNativeAndroidBundleURL);
+        }
         return reactManagerBuilder.build();
     }
 
@@ -79,16 +123,17 @@ public class ReactContextManager implements ReactInstanceManager.ReactInstanceEv
     //region === Dev Utils - emulator, demo configuration etc. ===
 
     /**
-     * DEV mode only, production use will always use bundles instead of live servers.
-     * Handy way to use real devices when developing.
-     * @param devMode   Is a dev build?
+     * DEV mode only, allows pointing to any public development server -
+     * handy way to use real devices when developing.
+     * Disabled for emulators - they'll always run on the default localhost:8081 port.
+     * Production use will always use bundles instead of live servers.
      */
-    private void setPackagerURL(Boolean devMode) {
-        if (devMode && !isEmulator()) {
+    private void setPackagerURL() {
+        if (developmentMode && !isEmulator() && reactNativeDevPackagerURL != null) {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
             preferences
                 .edit()
-                .putString(PREFS_DEBUG_SERVER_HOST_KEY, "simon-skeleton.ngrok.io") // yes, that should be fixed or removed altogether
+                .putString(PREFS_DEBUG_SERVER_HOST_KEY, reactNativeDevPackagerURL) // yes, that should be fixed or removed altogether
                 .apply();
         }
     }

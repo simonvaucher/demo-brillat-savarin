@@ -18,10 +18,26 @@
 
 #### Android
 
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.applicaster.RNDemoBrillatSavarinPackage;` to the imports at the top of the file
-  - Add `new RNDemoBrillatSavarinPackage(loginHandler)` to the list returned by the `getPackages()` method
-  - TBD: Clear instructions...
+1. Open the activity that will use the Manager, e.g. `MainActivity.java`
+  - Add `import com.applicaster.ReactNativeLoginPlugin.Manager;` to the imports at the top of the file
+  - Usage example:
+    ```
+    Manager loginManager = new Manager(this);
+    // loginManager.setReactNativeModuleName("some root name other than RNRoot");
+    loginManager.setDevelopmentMode(true);
+    loginManager.setLoginActionsListener(new Manager.LoginActionsListener() {
+        @Override
+        public void onLoginResult(String result) {
+            Log.d(TAG, "login result: " + result);
+        }
+        @Override
+        public void onReady() {
+            Log.d(TAG, "Plugin ready to use");
+        }
+    });
+    loginManager.initialize();
+    ```
+
 2. Append the following lines to `android/settings.gradle`:
   	```
   	include ':react-native-demo-brillat-savarin'
