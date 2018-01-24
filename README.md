@@ -7,7 +7,7 @@
 
 ### Installation
 
-- These instructions are for react-native-based projects, maybe the instructions should simply be... native?
+- These instructions are for react-native-based projects, maybe the instructions should simply be... only native?
 
 #### iOS
 
@@ -20,7 +20,8 @@
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
   - Add `import com.applicaster.RNDemoBrillatSavarinPackage;` to the imports at the top of the file
-  - Add `new RNDemoBrillatSavarinPackage()` to the list returned by the `getPackages()` method
+  - Add `new RNDemoBrillatSavarinPackage(loginHandler)` to the list returned by the `getPackages()` method
+  - TBD: Clear instructions...
 2. Append the following lines to `android/settings.gradle`:
   	```
   	include ':react-native-demo-brillat-savarin'
