@@ -1,6 +1,6 @@
 import Foundation
 
-class LoginReactModule: NSObject {  
+public class LoginReactModule: NSObject {  
     static let sharedInstance = LoginReactModule()
     
     var bridge: RCTBridge?
@@ -23,10 +23,11 @@ class LoginReactModule: NSObject {
 }
 
 extension LoginReactModule: RCTBridgeDelegate {
-    func sourceURL(for bridge: RCTBridge!) -> URL! {
+    public func sourceURL(for bridge: RCTBridge!) -> URL! {
         if TARGET_OS_SIMULATOR != 0 {
             return RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index", fallbackResource: nil)
         }
         return URL(string: Bundle.main.infoDictionary?["APDebugPackagerURL"] as! String)!
     }
 }
+

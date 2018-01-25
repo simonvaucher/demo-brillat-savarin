@@ -1,4 +1,4 @@
-class LoginManagerEventsEmitter {
+public class LoginManagerEventsEmitter {
     /// Shared Instance.
     public static var sharedInstance = LoginManagerEventsEmitter()
     
@@ -20,5 +20,4 @@ class LoginManagerEventsEmitter {
         return ["onShow", "onHide"]
     }()
 }
-
 

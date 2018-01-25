@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 @objc(APReactNativeLogin)
-class LoginManager: RCTEventEmitter  {
+public class LoginManager: RCTEventEmitter  {
     
     static var viewController: LoginViewController?
     
@@ -27,3 +27,4 @@ class LoginManager: RCTEventEmitter  {
         }
     }
 }
+

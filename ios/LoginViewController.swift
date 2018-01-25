@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class LoginViewController: UIViewController  {
+public class LoginViewController: UIViewController  {
     
     weak var delegate: LoginManagerDelegate?
     var reactRootView: RCTRootView!  
@@ -9,7 +9,7 @@ class LoginViewController: UIViewController  {
     var parentController: UIViewController!
     public private(set) var initialized = false
     
-    convenience init(withParentController parentController: UIViewController) {
+    convenience public init(withParentController parentController: UIViewController) {
         self.init(nibName:nil, bundle:nil)
         
         self.parentController = parentController
@@ -39,18 +39,17 @@ class LoginViewController: UIViewController  {
         
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         LoginManager.viewController = self
         self.view = reactRootView
     }
     
-    func show() {
-        print("huh?!?!?")
+    public func show() {
         if (self.initialized) {
             self.parentController!.present(self, animated: false, completion: nil)
-            //            self.loginManagerEventsEmitter.dispatch(name: "onShow", body: nil)
+//            self.loginManagerEventsEmitter.dispatch(name: "onShow", body: "")
         }
     }
     
@@ -69,4 +68,3 @@ class LoginViewController: UIViewController  {
         hide()
     }
 }
-

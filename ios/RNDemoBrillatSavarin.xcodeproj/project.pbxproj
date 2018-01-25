@@ -30,7 +30,7 @@
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNDemoBrillatSavarin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNDemoBrillatSavarin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F44D685F2019E98E00B139B1 /* LoginManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginManagerBridge.m; sourceTree = "<group>"; };
-		F44D68612019E9C300B139B1 /* LoginManager-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LoginManager-Bridging-Header.h"; sourceTree = "<group>"; };
+		F44D68612019E9C300B139B1 /* RNDemoBrillatSavarin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNDemoBrillatSavarin-Bridging-Header.h"; sourceTree = "<group>"; };
 		F44D68622019E9C400B139B1 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		F44D68642019EA8600B139B1 /* LoginManagerEventsEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerEventsEmitter.swift; sourceTree = "<group>"; };
 		F44D68662019EB5200B139B1 /* LoginReactModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginReactModule.swift; sourceTree = "<group>"; };
@@ -66,7 +66,7 @@
 				F44D68622019E9C400B139B1 /* LoginManager.swift */,
 				F44D68642019EA8600B139B1 /* LoginManagerEventsEmitter.swift */,
 				F44D685F2019E98E00B139B1 /* LoginManagerBridge.m */,
-				F44D68612019E9C300B139B1 /* LoginManager-Bridging-Header.h */,
+				F44D68612019E9C300B139B1 /* RNDemoBrillatSavarin-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -177,7 +177,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -214,7 +214,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
