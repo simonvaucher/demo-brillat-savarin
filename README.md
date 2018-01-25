@@ -21,7 +21,8 @@
 1. Open the activity that will use the Manager, e.g. `MainActivity.java`
   - Add `import com.applicaster.ReactNativeLoginPlugin.Manager;` to the imports at the top of the file
   - Usage example:
-    ```
+    ```java
+    // Initialization
     Manager loginManager = new Manager(this);
     // loginManager.setReactNativeModuleName("some root name other than RNRoot");
     loginManager.setDevelopmentMode(true);
@@ -36,6 +37,9 @@
         }
     });
     loginManager.initialize();
+
+    // Usage
+    loginManager.show(findViewById(R.id.my_parent_view))
     ```
 
 2. Append the following lines to `android/settings.gradle`:
@@ -55,4 +59,3 @@ import APReactNativeLogin from 'react-native-demo-brillat-savarin';
 
 APReactNativeLogin.onLoginResult("login result from user"); // A string. Yes, just a string.
 ```
-  
