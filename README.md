@@ -39,7 +39,7 @@
     loginManager.initialize();
 
     // Usage
-    loginManager.show(findViewById(R.id.my_parent_view))
+    loginManager.show(findViewById(R.id.my_parent_view));
     ```
 
 2. Append the following lines to `android/settings.gradle`:
