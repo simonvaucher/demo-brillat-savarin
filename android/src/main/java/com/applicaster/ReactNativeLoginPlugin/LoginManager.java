@@ -19,7 +19,7 @@ import com.facebook.react.bridge.ReactContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Manager implements LoginHandler {
+public class LoginManager implements LoginHandler {
     private static final int DEFAULT_POPUP_SIZE = RelativeLayout.LayoutParams.MATCH_PARENT;
     private static final String REACT_NATIVE_MODULE_NAME = "RNRoot";
 
@@ -28,7 +28,7 @@ public class Manager implements LoginHandler {
     private PopupWindow popupWindow;
     private NativeEventsEmitter nativeEventsEmitter;
 
-    private Manager.LoginActionsListener loginActionsListener;
+    private LoginManager.LoginActionsListener loginActionsListener;
     private boolean developmentMode = false;
     private String reactNativeModuleName = REACT_NATIVE_MODULE_NAME;
     private String reactNativeAndroidBundleURL;
@@ -53,7 +53,7 @@ public class Manager implements LoginHandler {
         this.initialized = initialized;
     }
 
-    public void setLoginActionsListener(Manager.LoginActionsListener loginActionsListener) {
+    public void setLoginActionsListener(LoginManager.LoginActionsListener loginActionsListener) {
         this.loginActionsListener = loginActionsListener;
     }
 
@@ -74,7 +74,7 @@ public class Manager implements LoginHandler {
     }
 
 
-    public Manager(Context context) {
+    public LoginManager(Context context) {
         this.context = context;
         setInitialized(false);
         setVisible(false);

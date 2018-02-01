@@ -23,10 +23,10 @@
   - Usage example:
     ```java
     // Initialization
-    Manager loginManager = new Manager(this);
+    Manager loginManager = new LoginManager(this);
     // loginManager.setReactNativeModuleName("some root name other than RNRoot");
     loginManager.setDevelopmentMode(true);
-    loginManager.setLoginActionsListener(new Manager.LoginActionsListener() {
+    loginManager.setLoginActionsListener(new LoginManager.LoginActionsListener() {
         @Override
         public void onLoginResult(String result) {
             Log.d(TAG, "login result: " + result);
